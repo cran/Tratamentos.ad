@@ -1,4 +1,4 @@
-#'Analise de experimento  conduzido no delineamento em blocos casualizados com
+#'Analise de experimento  conduzido no delineamento em quadrado latino com
 #'testemunhas adicionais
 #'
 #'@description Esta funcao retorna a comparacao multipla de medias (obtidas
@@ -6,17 +6,13 @@
 #'  Scott-Knott) se os tratamentos for qualitativos. Ou a analise de regressao
 #'  se os tratamentos forem quantitativos. Para comparar a testemunha adicional
 #'  com os demais e utilizado o teste Dunnet. Esta funcao considera o
-#'  delineamento em blocos casualizados. "This function returns the multiple
-#'  comparison tests (t, t tests with Bonferroni protection, Duncan, Dunnet,
-#'  SNK, Tukey and Scott-Knott ) if the treatments are qualitative. Or
-#'  regression analysis if treatments are quantitative. To compare the
-#'  additional control with the others treatments, the Dunnet test is used. This
-#'  function considers the randomized block design."
-#'@usage dbc.ad(Dados,alfa=0.05,quali=TRUE,verbose=TRUE)
+#'  delineamento em quadrados latinos.
+#'@usage dql.ad(Dados,alfa=0.05,quali=TRUE,verbose=TRUE)
 #'@param  Dados Matriz contendo na primeira coluna a identificacao dos
 #'  testemunhas (tratamentos comuns deve ter valor zero ou NA). A segunda coluna
 #'  deve ter a identificacao de todos os tratamentos.  A terceira coluna a
-#'  identificacao dos blocos. A quarta coluna a variavel resposta.
+#'  identificacao dos linhas. A quarta coluna a identificacao das colunas.
+#'   A quinta coluna a variavel resposta.
 #'@param quali Valor logico (TRUE/FALSE). TRUE indica que o tratamento e
 #'  qualitativo, realizando-se o teste de medias. FALSE indica que o fator e
 #'  quantitativo, sendo feita a analise de regressao.
@@ -35,16 +31,20 @@
 #'  ESALQ/USP. 1982. 430.
 #' @examples
 #'  ######
-#'  #Exemplo de um experimento em DBC com tratamentos qualitativos e uma
-#'  #testemunha adicional
-#'  data(Dados1)
-#'  dbc.ad(Dados = Dados1,alfa = 0.05,quali =TRUE)
-#'  #Exemplo de um experimento em DBC com tratamentos quantitativos e tres
+#'  #Exemplo de um experimento em DQL com tratamentos qualitativos e duas
 #'  #testemunhas adicionais
-#' data(Dados2)
-#' dbc.ad(Dados = Dados2,alfa = 0.05,quali =FALSE)
+#'  ?dql.ad
+#'  data(Dados7)
+#'  dql.ad(Dados = Dados7,alfa = 0.05,quali =TRUE)
+#'  #Exemplo de um experimento em DQL com tratamentos quantitativos e uma
+#'  #testemunha adicional
+#'  data(Dados8)
+#'  dql.ad(Dados = Dados8,alfa = 0.05,quali =FALSE)
 #'@export
-dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
+
+
+
+dql.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
   Dados[,1]=as.character(Dados[,1])
   Dados[is.na(Dados[,1]),1]=0
   Dados[,2]=as.character(Dados[,2])
@@ -85,10 +85,10 @@ dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
     }
 
 
-    i=3
-        DadosTrat2 = cbind(DadosTrat[, 1:2], Y = DadosTrat[,
+    i=4
+        DadosTrat2 = cbind(DadosTrat[, 1:3], Y = DadosTrat[,
             i])
-        DadosTest2 = cbind(DadosTest[, 1:2], Y = DadosTest[,
+        DadosTest2 = cbind(DadosTest[, 1:3], Y = DadosTest[,
             i])
         if (length(unique(DadosTest[, 1])) == 1) {
             anova1 = function(DadosTrat2, DadosTest2) {
@@ -97,15 +97,16 @@ dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
 
                 DadosTest[,1]=paste("T",DadosTest[,1],sep="_")
                 DT = rbind(DadosTrat, DadosTest)
-                Trat = sq(DT[, 1], DT[, 3])
-                Comum = sq(DadosTrat[, 1], DadosTrat[, 3])
+                Trat = sq(DT[, 1], DT[, i])
+                Comum = sq(DadosTrat[, 1], DadosTrat[, i])
                 DI = rbind(cbind(I = 1, DadosTrat), cbind(I = 2,
                   DadosTest))
-                Comum_vs_Test = sq(DI[, 1], DI[, 4])
-                Bloco = sq(DT[, 2], DT[, 3])
-                Total = sq(1:nrow(DT), DT[, 3])
-                Residuo = Total - Trat - Bloco
-                anova = rbind(Trat, Comum, Comum_vs_Test, Bloco,
+                Comum_vs_Test = sq(DI[, 1], DI[, i+1])
+                Linha = sq(DT[, 2], DT[, i])
+                Coluna = sq(DT[, 3], DT[, i])
+                Total = sq(1:nrow(DT), DT[, i])
+                Residuo = Total - Trat - Linha-Coluna
+                anova = rbind(Trat, Comum, Comum_vs_Test, Linha,Coluna,
                   Residuo, Total)
                 QM = anova[, 2]/anova[, 1]
                 Fc = QM/QM[length(QM) - 1]
@@ -121,19 +122,19 @@ dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
 
         if(verbose){print("Analise de variancia")}
                 if(verbose){print(anova)}
-       CV=100 * sqrt(QMR)/mean(DT[, 3])
+       CV=100 * sqrt(QMR)/mean(DT[, i])
        if(verbose){print(paste("CV= ",round(CV,4)) )}
 
        if(verbose){print("")}
        if(verbose){print("Testes")}
                 if(quali==T){
-                  TesteM=ComparacaoMedias(DadosTrat2[,3],trt =DadosTrat2[,1],
+                  TesteM=ComparacaoMedias(DadosTrat2[,i],trt =DadosTrat2[,1],
                           DFerror = GLR,MSerror = QMR,alpha = as.numeric(alfa) )
                   if(verbose){print(TesteM)}
                 }
 
                 if(quali==F){
-                  TesteM=RegressaoPolinomial(resp = DadosTrat2[,3],trat = as.numeric(as.character(DadosTrat2[,1])),
+                  TesteM=RegressaoPolinomial(resp = DadosTrat2[,i],trat = as.numeric(as.character(DadosTrat2[,1])),
                                              glres =GLR,SQres =GLR*QMR,gltrat = Comum[1],SQtrat = Comum[2],
                                              verbose = verbose )
                 }
@@ -147,13 +148,14 @@ dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
                 DMS1=sqrt(QMR/nrep+QMR/nrep)*q1
 
 
-                Test = tapply(DadosTest[, 3], as.factor(as.matrix(DadosTest[,
+                Test = tapply(DadosTest[, i], as.factor(as.matrix(DadosTest[,
                   1])), mean, na = T)
-                Comum = tapply(DadosTrat[, 3], as.factor(as.matrix(DadosTrat[,
+                Comum = tapply(DadosTrat[, i], as.factor(as.matrix(DadosTrat[,
                   1])), mean, na = T)
                 Dunnet = NULL
                 for (it in 1:length(unique(DadosTest[, 1]))) {
                   Comum2 = Comum
+
                   if(sum(abs(Comum - Test[it]) > DMS1)>0){
                     Comum2[abs(Comum - Test[it]) > DMS1] = paste(Comum2[abs(Comum -
                                                                               Test[it]) > DMS1], "*", sep = "")
@@ -163,6 +165,7 @@ dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
                     Comum2[abs(Comum - Test[it]) < DMS1] = paste(Comum2[abs(Comum -
                                                                               Test[it]) < DMS1], "ns", sep = "")
                   }
+
                   Comum2 = c(Comum2, Testemunha = Test[it])
                   NomeTest = names(Test)[it]
                   Dunnet = c(Dunnet, list(TesteDunnett = Comum2))
@@ -187,17 +190,18 @@ dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
                 DadosTrat = DadosTrat2
                 DadosTest = DadosTest2
                 DT = rbind(DadosTrat, DadosTest)
-                Trat = sq(DT[, 1], DT[, 3])
-                Comum = sq(DadosTrat[, 1], DadosTrat[, 3])
-                Testemunha = sq(DadosTest[, 1], DadosTest[, 3])
+                Trat = sq(DT[, 1], DT[, i])
+                Comum = sq(DadosTrat[, 1], DadosTrat[, i])
+                Testemunha = sq(DadosTest[, 1], DadosTest[, i])
                 DI = rbind(cbind(I = 1, DadosTrat), cbind(I = 2,
                   DadosTest))
-                Comum_vs_Test = sq(DI[, 1], DI[, 4])
-                Bloco = sq(DT[, 2], DT[, 3])
-                Total = sq(1:nrow(DT), DT[, 3])
-                Residuo = Total - Trat - Bloco
+                Comum_vs_Test = sq(DI[, 1], DI[, i+1])
+                Linha = sq(DT[, 2], DT[, i])
+                Coluna = sq(DT[, 3], DT[, i])
+                Total = sq(1:nrow(DT), DT[, i])
+                Residuo = Total - Trat - Linha-Coluna
                 anova = rbind(Trat, Comum, Testemunha, Comum_vs_Test,
-                  Bloco, Residuo, Total)
+                  Linha,Coluna, Residuo, Total)
                 QM = anova[, 2]/anova[, 1]
                 Fc = QM/QM[length(QM) - 1]
                 QMR = QM[length(QM) - 1]
@@ -212,19 +216,19 @@ dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
 
                 if(verbose){print("Analise de variancia")}
                   if(verbose){print(anova)}
-                CV=100 * sqrt(QMR)/mean(DT[, 3])
+                CV=100 * sqrt(QMR)/mean(DT[, i])
                 if(verbose){print(paste("CV= ",round(CV,4)) )}
                   if(verbose){print("")}
                     if(verbose){print("Testes")}
                 if(quali==T){
-                  TesteM=ComparacaoMedias(DadosTrat2[,3],trt =DadosTrat2[,1],
+                  TesteM=ComparacaoMedias(DadosTrat2[,i],trt =DadosTrat2[,1],
                                           DFerror = GLR,MSerror = QMR,
                                           alpha = as.numeric(alfa) )
                   if(verbose){print(TesteM)}
                 }
 
                 if(quali==F){
-                  TesteM=RegressaoPolinomial(resp = DadosTrat2[,3],trat = as.numeric(as.character(DadosTrat2[,1])),
+                  TesteM=RegressaoPolinomial(resp = DadosTrat2[,i],trat = as.numeric(as.character(DadosTrat2[,1])),
                                              glres =GLR,SQres =GLR*QMR,gltrat = Comum[1],
                                              SQtrat = Comum[2],verbose=verbose )
                 }
@@ -245,21 +249,18 @@ dbc.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
                 q1=DunnetCritic(Residuo[1],ntratComum,alfa)
                 DMS5=sqrt(QMR/nrep+QMR/nrep)*q1
 
-                Test = tapply(DadosTest[, 3], as.factor(as.matrix(DadosTest[,
+                Test = tapply(DadosTest[, i], as.factor(as.matrix(DadosTest[,
                   1])), mean, na = T)
-                Comum = tapply(DadosTrat[, 3], as.factor(as.matrix(DadosTrat[,
+                Comum = tapply(DadosTrat[, i], as.factor(as.matrix(DadosTrat[,
                   1])), mean, na = T)
                 Dunnet = NULL
                 for (it in 1:length(unique(DadosTest[, 1]))) {
                   Comum2 = Comum
-                  if(sum(abs(Comum - Test[it]) > DMS5)>0){
-                    Comum2[abs(Comum - Test[it]) > DMS5] = paste(Comum2[abs(Comum -
-                                                                              Test[it]) > DMS5], "*", sep = "")
-                  }
-
+                  Comum2[abs(Comum - Test[it]) > DMS5] = paste(Comum2[abs(Comum -
+                    Test[it]) > DMS5], "*", sep = "")
                   if(sum(abs(Comum - Test[it]) < DMS5)>0){
-                    Comum2[abs(Comum - Test[it]) < DMS5] = paste(Comum2[abs(Comum -
-                                                                              Test[it]) < DMS5], "ns", sep = "")
+                  Comum2[abs(Comum - Test[it]) < DMS5] = paste(Comum2[abs(Comum -
+                    Test[it]) < DMS5], "ns", sep = "")
                   }
                   Comum2 = c(Comum2, Testemunha = Test[it])
                   NomeTest = names(Test)[it]

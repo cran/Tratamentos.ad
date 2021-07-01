@@ -26,13 +26,18 @@
 #'  respectivo fator e qualitativo, realizando-se o teste de medias. FALSE
 #'  indica que o fator e quantitativo, sendo feita a analise de regressao.
 #'@param  verbose Valor logico (TRUE/FALSE). TRUE apresenta os resultados da analise.
+#' @author Alcinei Mistico Azevedo, \email{alcineimistico@@hotmail.com}
 
-
-#'@references BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
-#'  Jaboticabal: Funep. 2006. 237 p. ISBN: 85-87632-71-X
+#'@references
+#' Canal no youtube -> Alcinei Azevedo - Dicas e aulas
+#' <https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
+#'
+#'  BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
+#'  Jaboticabal: Funep. 2006. 237 p.
 #'
 #'  GOMES, F. P. Curso de Estatistica Experimental. 10a ed. Piracicaba:
 #'  ESALQ/USP. 1982. 430.
+
 #'@return Retorna a comparacao multipla de medias obtida por varios testes para
 #'  tratamentos qualitativos e regressao para testes quantitativos. O teste
 #'  Dunnet e feito para comparar os tratamentos testemunhas com os demais.
@@ -169,8 +174,15 @@ if(quali[1]==F){
   Dunnet=NULL
   for (it in 1:length(Test)){
     Comum2=Comum
-    Comum2[abs(Comum-Test[it])>DMS1]=paste(Comum2[abs(Comum-Test[it])>DMS1], "*",sep="")
-    Comum2[abs(Comum-Test[it])<DMS1]=paste(Comum2[abs(Comum-Test[it])<DMS1], "ns",sep="")
+    if(sum(abs(Comum - Test[it]) > DMS1)>0){
+      Comum2[abs(Comum - Test[it]) > DMS1] = paste(Comum2[abs(Comum -
+                                                                Test[it]) > DMS1], "*", sep = "")
+    }
+
+    if(sum(abs(Comum - Test[it]) < DMS1)>0){
+      Comum2[abs(Comum - Test[it]) < DMS1] = paste(Comum2[abs(Comum -
+                                                                Test[it]) < DMS1], "ns", sep = "")
+    }
     Comum2=c(Comum2,Testemunha=Test[it])
     NomeTest=names(Test)[it]
     Dunnet=c(Dunnet,list(TesteDunnett=Comum2))
@@ -217,8 +229,15 @@ if(quali[2]==F){
   Dunnet=NULL
   for (it in 1:length(Test)){
     Comum2=Comum
-    Comum2[abs(Comum-Test[it])>DMS1]=paste(Comum2[abs(Comum-Test[it])>DMS1], "*",sep="")
-    Comum2[abs(Comum-Test[it])<DMS1]=paste(Comum2[abs(Comum-Test[it])<DMS1], "ns",sep="")
+    if(sum(abs(Comum - Test[it]) > DMS1)>0){
+      Comum2[abs(Comum - Test[it]) > DMS1] = paste(Comum2[abs(Comum -
+                                                                Test[it]) > DMS1], "*", sep = "")
+    }
+
+    if(sum(abs(Comum - Test[it]) < DMS1)>0){
+      Comum2[abs(Comum - Test[it]) < DMS1] = paste(Comum2[abs(Comum -
+                                                                Test[it]) < DMS1], "ns", sep = "")
+    }
     Comum2=c(Comum2,Testemunha=Test[it])
     NomeTest=names(Test)[it]
     Dunnet=c(Dunnet,list(TesteDunnett=Comum2))
@@ -295,8 +314,15 @@ Comum=round(tapply(var[id], as.factor(paste(Dados[id,2],Dados[id,3],sep="_")),me
 Dunnet=NULL
 for (it in 1:length(Test)){
   Comum2=Comum
-  Comum2[abs(Comum-Test[it])>DMS1]=paste(Comum2[abs(Comum-Test[it])>DMS1], "*",sep="")
-  Comum2[abs(Comum-Test[it])<DMS1]=paste(Comum2[abs(Comum-Test[it])<DMS1], "ns",sep="")
+  if(sum(abs(Comum - Test[it]) > DMS1)>0){
+    Comum2[abs(Comum - Test[it]) > DMS1] = paste(Comum2[abs(Comum -
+                                                              Test[it]) > DMS1], "*", sep = "")
+  }
+
+  if(sum(abs(Comum - Test[it]) < DMS1)>0){
+    Comum2[abs(Comum - Test[it]) < DMS1] = paste(Comum2[abs(Comum -
+                                                              Test[it]) < DMS1], "ns", sep = "")
+  }
   Comum2=c(Comum2,Testemunha=Test[it])
   NomeTest=names(Test)[it]
   Dunnet=c(Dunnet,list(TesteDunnett=Comum2))

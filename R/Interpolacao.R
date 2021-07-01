@@ -1,16 +1,4 @@
-#'Interpolacao
-#'
-#'@description Esta funcao faz a interpolacao para a obtencao de valores
-#'  tabelados.
-#'@usage Interpolacao(Mat,GLtrat,GLres,gln,gld)
-#'@param         Mat Matriz contendo os valores tabelados.
-#'@param         GLtrat Vetor com os graus de liberdade correspondente as
-#'  colunas.
-#'@param         GLres Vetor com os graus de liberdade correspondente as linhas.
-#'@param         gln Graus de liberdade desejado na coluna.
-#'@param         gld Graus de liberdade desejado na linha.
-#'@return Retorna o valor tabelado apos a interpolacao.
-#'
+
 
 Interpolacao=function(Mat,GLtrat,GLres,gln,gld){
 

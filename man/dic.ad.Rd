@@ -51,9 +51,14 @@ data(Dados2)
 dic.ad(Dados = Dados2,alfa = 0.05,quali =FALSE)
 }
 \references{
-BANZATTO, D. A.; KRONKA, S. N. Experimentacao
-Agricola. 4 ed. Jaboticabal: Funep. 2006. 237 p.
+<https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
 
-GOMES, F. P. Curso de Estatistica Experimental.
-10a ed. Piracicaba: ESALQ/USP. 1982. 430.
+ BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
+ Jaboticabal: Funep. 2006. 237 p.
+
+ GOMES, F. P. Curso de Estatistica Experimental. 10a ed. Piracicaba:
+ ESALQ/USP. 1982. 430.
+}
+\author{
+Alcinei Mistico Azevedo, \email{alcineimistico@hotmail.com}
 }

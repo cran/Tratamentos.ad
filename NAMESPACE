@@ -2,6 +2,7 @@
 
 export(dbc.ad)
 export(dic.ad)
+export(dql.ad)
 export(fatorial2.ad.dbc)
 export(fatorial2.ad.dic)
 importFrom(stats,anova)
@@ -16,3 +17,5 @@ importFrom(stats,qt)
 importFrom(stats,qtukey)
 importFrom(utils,combn)
 importFrom(utils,read.table)
+importFrom(utils,setTxtProgressBar)
+importFrom(utils,txtProgressBar)

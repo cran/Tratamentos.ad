@@ -14,6 +14,16 @@
 #' @name Tratamentos.ad-package
 #' @aliases Tratamentos.ad
 # @author Alcinei Mistico Azevedo <alcineimistico@@hotmail.com>
-#' @references <https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
-#' @seealso {dic.ad,dbc.ad,fatorial2.dic.ad,fatorial2.dbc.ad}
+#'@references
+#' Canal no youtube -> Alcinei Azevedo - Dicas e aulas
+#' <https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
+#'
+#'  BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
+#'  Jaboticabal: Funep. 2006. 237 p.
+#'
+#'  GOMES, F. P. Curso de Estatistica Experimental. 10a ed. Piracicaba:
+#'  ESALQ/USP. 1982. 430.
+
+#' @seealso \code{\link{dic.ad}}, \code{\link{dbc.ad}},
+#'  \code{\link{fatorial2.ad.dic}}, \code{\link{fatorial2.ad.dbc}}
 NULL

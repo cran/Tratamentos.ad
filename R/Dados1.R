@@ -14,5 +14,5 @@
 #'   numerico.} }
 #' @references
 #' <https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
-#' @author Alcinei Mistico Azevedo, \email{<alcineimistico@@hotmail.com>}
+#' @author Alcinei Mistico Azevedo, \email{alcineimistico@@hotmail.com}
 NULL

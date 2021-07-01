@@ -1,23 +1,4 @@
-#'Regressao polinomial
-#'@description Esta funcao retorna os resultados da analise de regressao linear,
-#'  quadratica e cubica (Funcao adaptada do expDes.pt). "This function returns
-#'  the results of the linear, quadratic and cubic regression analysis."
-#'@usage RegressaoPolinomial(resp, trat, glres, SQres, gltrat, SQtrat,verbose=T)
-#'@param resp Vetor numerico contendo a variavel resposta.
-#'@param trat Vetor contendo a identificacao dos tratamentos.
-#'@param glres  Grau de liberdade dos residuos.
-#'@param SQres Soma de quadrado dos residuos.
-#'@param gltrat  Grau de liberdade de tratamentos.
-#'@param SQtrat Soma de quadrado de tratamentos.
-#'@param  verbose Valor logico (TRUE/FALSE). TRUE apresenta os resultados da analise.
 
-#'@return Retorna os resultads da analise de regressao.
-#'@references BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
-#'  Jaboticabal: Funep. 2006. 237 p.
-#'
-#'  GOMES, F. P. Curso de Estatistica Experimental. 10a ed. Piracicaba:
-#'  ESALQ/USP. 1982. 430.
-#'
 RegressaoPolinomial=function (resp, trat, glres, SQres, gltrat, SQtrat,verbose=T) {
 
   ginv<-function(X, tol = sqrt(.Machine$double.eps))

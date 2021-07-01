@@ -1,23 +1,3 @@
-#'Valor Critico do teste Dunnet
-#'
-#'@description Esta funcao retorna o valor critico do teste bilateral
-#'  Dunnet."This function returns the critical value of the Dunnet bilateral
-#'  test."
-#'@usage DunnetCritic(gln,gld,sig)
-#'@param         gln Numero de comparacoes a serem realizadas.
-#'@param         gld Numero de graus de liberdade do residuo.
-#'@param         sig  Nivel de significancia, deve receber o valor 0.001, 0.01,
-#'  0.05 ou 0.01.
-#'@return Retorna o valor do teste Dunnett (bilateral).
-#'@references BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
-#'  Jaboticabal: Funep. 2006. 237 p.
-#'
-#'  GOMES, F. P. Curso de Estatistica Experimental. 10a ed. Piracicaba:
-#'  ESALQ/USP. 1982. 430.
-
-#'
-
-
 
 DunnetCritic=function(gln,gld,sig){
 

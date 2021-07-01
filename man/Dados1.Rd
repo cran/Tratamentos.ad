@@ -22,6 +22,6 @@ Exemplo simulado de um experimento com um fator qualitativo, uma
 <https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
 }
 \author{
-Alcinei Mistico Azevedo, \email{<alcineimistico@hotmail.com>}
+Alcinei Mistico Azevedo, \email{alcineimistico@hotmail.com}
 }
 \keyword{datasets}

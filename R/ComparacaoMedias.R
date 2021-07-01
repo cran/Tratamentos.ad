@@ -1,27 +1,3 @@
-#'Comparacao de medias
-#'@description "This function returns the multiple
-#'  comparison of means by the t, t with Bonferroni protection, Duncan, SNK,
-#'  Tukey and Scott-Knott tests".
-#'  Esta funcao retorna a comparacao multipla de medias obtidas pelos
-#'  testes t, t com protecao de Bonferroni, Duncan, SNK, Tukey e Scott-Knott
-#'  (Funcao adaptada do expDes.pt).
-#'@usage ComparacaoMedias(y, trt, DFerror, MSerror, alpha = 0.05, group =
-#'  TRUE,main = NULL)
-#'@param         y Vetor numerico contendo a variavel resposta.
-#'@param         trt Vetor numerico ou complexo contendo os tratamentos.
-#'@param         DFerror  Grau de liberdade do residuo.
-#'@param         MSerror Quadrado medio do residuo.
-#'@param         alpha Nivel nominal de significancia.
-#'@param         group TRUE ou FALSE
-#'@param         main Titulo.
-#'@return Retorna a comparacao multipla de medias obtida por varios testes.
-#'@references BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
-#'  Jaboticabal: Funep. 2006. 237 p. ISBN: 85-87632-71-X
-#'
-#'  GOMES, F. P. Curso de Estatistica Experimental. 10a ed. Piracicaba:
-#'  ESALQ/USP. 1982. 430.
-#'
-
 
 ComparacaoMedias=function(y, trt, DFerror, MSerror, alpha = 0.05, group = TRUE,main = NULL) {
 ######################################

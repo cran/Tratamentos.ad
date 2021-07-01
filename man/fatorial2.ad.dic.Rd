@@ -60,9 +60,15 @@ data(Dados5)
 fatorial2.ad.dic(Dados5,Protegido=TRUE,alfa = 0.05,quali = c(TRUE,FALSE))
 }
 \references{
-BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
- Jaboticabal: Funep. 2006. 237 p. ISBN: 85-87632-71-X
+Canal no youtube -> Alcinei Azevedo - Dicas e aulas
+<https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
+
+ BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
+ Jaboticabal: Funep. 2006. 237 p.
 
  GOMES, F. P. Curso de Estatistica Experimental. 10a ed. Piracicaba:
  ESALQ/USP. 1982. 430.
+}
+\author{
+Alcinei Mistico Azevedo, \email{alcineimistico@hotmail.com}
 }

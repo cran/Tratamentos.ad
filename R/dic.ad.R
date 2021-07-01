@@ -27,11 +27,15 @@
 #' @param  alfa valor indicando o nivel de significancia. Deve ser
 #'   obrigatoriamente "0.001", "0.01", "0.05" ou "0.10" (default = 0.05).
 #' @return Retorna a comparacao multipla de medias obtida por varios testes.
-#' @references BANZATTO, D. A.; KRONKA, S. N. Experimentacao
-#' Agricola. 4 ed. Jaboticabal: Funep. 2006. 237 p.
+#' @author Alcinei Mistico Azevedo, \email{alcineimistico@@hotmail.com}
+#'@references
+#' <https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
 #'
-#' GOMES, F. P. Curso de Estatistica Experimental.
-#' 10a ed. Piracicaba: ESALQ/USP. 1982. 430.
+#'  BANZATTO, D. A.; KRONKA, S. N. Experimentacao Agricola. 4 ed.
+#'  Jaboticabal: Funep. 2006. 237 p.
+#'
+#'  GOMES, F. P. Curso de Estatistica Experimental. 10a ed. Piracicaba:
+#'  ESALQ/USP. 1982. 430.
 #' @examples
 #'  ######
 #'  #Exemplo de um experimento em DIC com tratamentos qualitativos e uma
@@ -152,10 +156,16 @@ dic.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
                 Dunnet = NULL
                 for (it in 1:length(unique(DadosTest[, 1]))) {
                   Comum2 = Comum
+
+                  if(sum(abs(Comum - Test[it]) > DMS1)>0){
                   Comum2[abs(Comum - Test[it]) > DMS1] = paste(Comum2[abs(Comum -
                     Test[it]) > DMS1], "*", sep = "")
-                  Comum2[abs(Comum - Test[it]) < DMS1] = paste(Comum2[abs(Comum -
-                    Test[it]) < DMS1], "ns", sep = "")
+                  }
+
+                  if(sum(abs(Comum - Test[it]) < DMS1)>0){
+                    Comum2[abs(Comum - Test[it]) < DMS1] = paste(Comum2[abs(Comum -
+                                                                              Test[it]) < DMS1], "ns", sep = "")
+                  }
                   Comum2 = c(Comum2, Testemunha = Test[it])
                   NomeTest = names(Test)[it]
                   Dunnet = c(Dunnet, list(TesteDunnett = Comum2))
@@ -217,8 +227,8 @@ dic.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
 
                 if(quali==F){
                   TesteM=RegressaoPolinomial(resp = DadosTrat2[,3],trat = as.numeric(as.character(DadosTrat2[,1])),
-                                             glres =GLR,SQres =GLR*QMR,gltrat = Trat[1],
-                                             SQtrat = Trat[2], verbose=verbose)
+                                             glres =GLR,SQres =GLR*QMR,gltrat = Comum[1],
+                                             SQtrat = Comum[2], verbose=verbose)
                 }
 
 
@@ -244,11 +254,20 @@ dic.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
                 Dunnet = NULL
                 for (it in 1:length(unique(DadosTest[, 1]))) {
                   Comum2 = Comum
-                  Comum2[abs(Comum - Test[it]) > DMS5] = paste(Comum2[abs(Comum -
-                    Test[it]) > DMS5], "*", sep = "")
 
-                  Comum2[abs(Comum - Test[it]) < DMS5] = paste(Comum2[abs(Comum -
-                    Test[it]) < DMS5], "ns", sep = "")
+                  if(sum(abs(Comum - Test[it]) > DMS5)>0){
+                    Comum2[abs(Comum - Test[it]) > DMS5] = paste(Comum2[abs(Comum -
+                                                                              Test[it]) > DMS5], "*", sep = "")
+                  }
+
+                  if(sum(abs(Comum - Test[it]) < DMS5)>0){
+                    Comum2[abs(Comum - Test[it]) < DMS5] = paste(Comum2[abs(Comum -
+                                                                              Test[it]) < DMS5], "ns", sep = "")
+                  }
+
+
+
+
                   Comum2 = c(Comum2, Testemunha = Test[it])
                   NomeTest = names(Test)[it]
                   Dunnet = c(Dunnet, list(TesteDunnett = Comum2))
