@@ -7,7 +7,7 @@
 #'  se os tratamentos forem quantitativos. Para comparar a testemunha adicional
 #'  com os demais e utilizado o teste Dunnet. Esta funcao considera o
 #'  delineamento em quadrados latinos.
-#'@usage dql.ad(Dados,alfa=0.05,quali=TRUE,verbose=TRUE)
+#'@usage dql.ad(Dados,alfa=0.05,quali=TRUE,verbose=TRUE,plot=2)
 #'@param  Dados Matriz contendo na primeira coluna a identificacao dos
 #'  testemunhas (tratamentos comuns deve ter valor zero ou NA). A segunda coluna
 #'  deve ter a identificacao de todos os tratamentos.  A terceira coluna a
@@ -19,6 +19,14 @@
 #'@param  alfa valor indicando o nivel de significancia deve ser
 #'  obrigatoriamente "0.001", "0.01", "0.05" ou "0.10" (default = 0.05).
 #'@param  verbose Valor logico (TRUE/FALSE). TRUE apresenta os resultados da analise.
+#'@param  plot Valor numerico indicando o grafico desejado para analise dos residuos:
+#'   \itemize{
+#'    \item 1: Residuals vs Fitted
+#'   \item 2:  QQ-plot
+#'    \item 3:  Scale-Location
+#'     \item 4:  Cook's distance
+#'      \item 5: Histogram
+#'      }
 #'@return Retorna a comparacao multipla de medias obtida por varios testes.
 #' @author Alcinei Mistico Azevedo, \email{alcineimistico@@hotmail.com}
 #'@references
@@ -44,7 +52,8 @@
 
 
 
-dql.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
+dql.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE,plot=2){
+  pp=plot
   Dados[,1]=as.character(Dados[,1])
   Dados[is.na(Dados[,1]),1]=0
   Dados[,2]=as.character(Dados[,2])
@@ -124,6 +133,25 @@ dql.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
                 if(verbose){print(anova)}
        CV=100 * sqrt(QMR)/mean(DT[, i])
        if(verbose){print(paste("CV= ",round(CV,4)) )}
+
+
+
+       TT=paste(Dados[,1],Dados[,2])
+       m=aov(Dados[,5]~TT+as.factor(Dados[,4])+as.factor(Dados[,3]))
+       if(pp<5){(plot(m,pp))}
+       if(pp==5){(hist(residuals(m)))}
+
+
+       if(verbose){print("")}
+       if(verbose){print("Teste de normalidade")}
+       ST=shapiro.test(residuals(m))
+       if(verbose){print(ST)}
+       BT=bartlett.test(residuals(m),TT)
+       if(verbose){print("")}
+       if(verbose){print("Teste de homogeneidade de variancias")}
+       if(verbose){print(BT)}
+
+
 
        if(verbose){print("")}
        if(verbose){print("Testes")}
@@ -218,6 +246,26 @@ dql.ad=function (Dados, alfa=0.05,quali=TRUE,verbose=TRUE){
                   if(verbose){print(anova)}
                 CV=100 * sqrt(QMR)/mean(DT[, i])
                 if(verbose){print(paste("CV= ",round(CV,4)) )}
+
+
+
+                TT=paste(Dados[,1],Dados[,2])
+                m=aov(Dados[,5]~TT+as.factor(Dados[,4])+as.factor(Dados[,3]))
+                if(pp<5){(plot(m,pp))}
+                if(pp==5){(hist(residuals(m)))}
+
+
+                if(verbose){print("")}
+                if(verbose){print("Teste de normalidade")}
+                ST=shapiro.test(residuals(m))
+                if(verbose){print(ST)}
+                BT=bartlett.test(residuals(m),TT)
+                if(verbose){print("")}
+                if(verbose){print("Teste de homogeneidade de variancias")}
+                if(verbose){print(BT)}
+
+
+
                   if(verbose){print("")}
                     if(verbose){print("Testes")}
                 if(quali==T){

@@ -11,7 +11,7 @@
 #'  factor is qualitative. Or regression analysis if the factor is quantitative.
 #'  To compare the additionals controls with the others treatments, the Dunnet
 #'  test is used."
-#'@usage fatorial2.ad.dic(Dados,Protegido=FALSE,alfa=0.05,quali=c(TRUE,TRUE),verbose=TRUE)
+#'@usage fatorial2.ad.dic(Dados,Protegido=FALSE,alfa=0.05,quali=c(TRUE,TRUE),verbose=TRUE,plot=2)
 #'@param Dados Matriz contendo na primeira coluna a identificacao das
 #'  testemunhas (tratamentos comuns deve ter valor "NA" ou zero). A segunda
 #'  coluna deve ter a identificacao dos niveis do primeiro fator. A terceira
@@ -27,7 +27,14 @@
 #'  indica que o fator e quantitativo, sendo feita a analise de regressao.
 #'@param  verbose Valor logico (TRUE/FALSE). TRUE apresenta os resultados da analise.
 #' @author Alcinei Mistico Azevedo, \email{alcineimistico@@hotmail.com}
-
+#'@param  plot Valor numerico indicando o grafico desejado para analise dos residuos:
+#'   \itemize{
+#'    \item 1: Residuals vs Fitted
+#'   \item 2:  QQ-plot
+#'    \item 3:  Scale-Location
+#'     \item 4:  Cook's distance
+#'      \item 5: Histogram
+#'      }
 #'@references
 #' Canal no youtube -> Alcinei Azevedo - Dicas e aulas
 #' <https://www.youtube.com/playlist?list=PLvth1ZcREyK4wSzwg-IxvrzaNzSLLrXEB>
@@ -59,7 +66,8 @@
 
 
 
-fatorial2.ad.dic=function(Dados,Protegido=FALSE,alfa=0.05,quali=c(TRUE,TRUE),verbose=TRUE) {
+fatorial2.ad.dic=function(Dados,Protegido=FALSE,alfa=0.05,quali=c(TRUE,TRUE),verbose=TRUE,plot=2) {
+  pp=plot
 ######################################
 
 sq=function(Fac,x){
@@ -124,6 +132,28 @@ ANOVA[n-1,4:5]=""
 if(verbose){print("Analise de variancia")}
 if(verbose){print(ANOVA)}
 if(verbose){print(paste("CV%=", round(100*sqrt(Residuo[3])/mean(var),4)))}
+
+
+
+
+TT=paste(Dados[,1],Dados[,2],Dados[,3])
+m=aov(Dados[,5]~TT)
+if(pp<5){(plot(m,pp))}
+if(pp==5){(hist(residuals(m)))}
+
+
+if(verbose){print("")}
+if(verbose){print("Teste de normalidade")}
+ST=shapiro.test(residuals(m))
+if(verbose){print(ST)}
+BT=bartlett.test(residuals(m),TT)
+if(verbose){print("")}
+if(verbose){print("Teste de homogeneidade de variancias")}
+if(verbose){print(BT)}
+
+
+
+
 
 FAsig=as.numeric(ANOVA[1,5])<alfa
 FBsig=as.numeric(ANOVA[2,5])<alfa

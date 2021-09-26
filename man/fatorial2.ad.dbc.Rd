@@ -4,7 +4,7 @@
 \alias{fatorial2.ad.dbc}
 \title{Analise de experimento fatorial duplo com testemunhas no DBC}
 \usage{
-fatorial2.ad.dbc(Dados,Protegido=FALSE,alfa=0.05,quali=c(TRUE,TRUE),verbose=TRUE)
+fatorial2.ad.dbc(Dados,Protegido=FALSE,alfa=0.05,quali=c(TRUE,TRUE),verbose=TRUE,plot=2)
 }
 \arguments{
 \item{Dados}{Matriz contendo na primeira coluna a identificacao das
@@ -26,6 +26,15 @@ respectivo fator e qualitativo, realizando-se o teste de medias. FALSE
 indica que o fator e quantitativo, sendo feita a analise de regressao.}
 
 \item{verbose}{Valor logico (TRUE/FALSE). TRUE apresenta os resultados da analise.}
+
+\item{plot}{Valor numerico indicando o grafico desejado para analise dos residuos:
+\itemize{
+ \item 1: Residuals vs Fitted
+\item 2:  QQ-plot
+ \item 3:  Scale-Location
+  \item 4:  Cook's distance
+   \item 5: Histogram
+   }}
 }
 \value{
 Retorna a comparacao multipla de medias obtida por varios testes para
