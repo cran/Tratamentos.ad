@@ -325,19 +325,23 @@ Duncan=function (y, trt, DFerror, MSerror, alpha = 0.05, group = TRUE,main = NUL
   kk <- 1
   for (kk in 1:k.snk) {
     alphap = 1 - (1 - alpha)^((kk + 1) - 1)
-    xxxx=qtukey(1 - alphap, kk + 1, DFerror)
+
+    xxxx=suppressWarnings(qtukey(1 - alphap, kk + 1, DFerror))
     if(is.na(xxxx)){xxxx=4}
     Tprob[kk] <- xxxx
   }
   p.nan <- as.vector(na.action(na.omit(Tprob)))[1]
   ult <- p.nan - 1
+  if(!is.null(p.nan)){
   if (ntr == 50)
     Tprob[p.nan:length(Tprob)] <- seq(Tprob[ult], 3.61, length = length(Tprob) -
                                         ult)
   if (ntr == 100)
     Tprob[p.nan:length(Tprob)] <- seq(Tprob[ult], 3.67, length = length(Tprob) -
                                         ult)
+  }
   nr <- unique(nn[, 2])
+
   nfila <- c("Alpha", "Error Degrees of Freedom", "Error Mean Square")
   nfila1 <- c("Distances between averages", "Critical Value of Studentized Range")
   nvalor <- c(alpha, DFerror, MSerror)
