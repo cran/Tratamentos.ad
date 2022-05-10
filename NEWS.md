@@ -1,4 +1,8 @@
-# Tratamentos.ad 0.2.1
+# Tratamentos.ad 0.2.3
+## Minor improvements
+* Email address was changed in dataset description
+
+# Tratamentos.ad 0.2.2
 ## Minor improvements
 * The function ComparacaoMedias() was improvement
 

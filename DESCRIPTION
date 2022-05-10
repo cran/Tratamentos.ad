@@ -1,7 +1,7 @@
 Package: Tratamentos.ad
 Type: Package
 Title: Pacote Para Analise De Experimentos Com Testemunhas Adicionais
-Version: 0.2.2
+Version: 0.2.3
 Authors@R: 
     person(given = "Alcinei Mistico",
            family = "Azevedo",
@@ -21,9 +21,9 @@ LazyData: false
 RoxygenNote: 7.1.1
 Language: pt-BR
 NeedsCompilation: no
-Packaged: 2021-11-19 20:41:10 UTC; Alcinei
+Packaged: 2022-05-10 11:50:03 UTC; Alcinei
 Author: Alcinei Mistico Azevedo [aut, cre]
     (<https://orcid.org/0000-0001-5196-0851>)
 Maintainer: Alcinei Mistico Azevedo <alcineimistico@hotmail.com>
 Repository: CRAN
-Date/Publication: 2021-11-19 21:00:02 UTC
+Date/Publication: 2022-05-10 12:00:02 UTC
