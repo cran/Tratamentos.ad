@@ -1,3 +1,7 @@
+# Tratamentos.ad 0.2.4
+## Minor improvements
+* Some Bugs were corrected
+
 # Tratamentos.ad 0.2.3
 ## Minor improvements
 * Email address was changed in dataset description
